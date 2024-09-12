@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .schedule-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .match-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e3e3e3;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .match-card:hover {
+            background-color: #d1d1d1;
+        }
+
+        .match-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .team-logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .team {
+            margin: 0 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .vs {
+            font-size: 18px;
+            color: #555;
+            margin: 0 20px;
+        }
+
+        .match-time {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="schedule-container">
+        <h2>Upcoming Match Schedule</h2>
+
+        <a id="1" onclick="match(this)" class="match-card">
+            <div class="match-info">
+                <img src="teamA_logo.png" alt="Team A Logo" class="team-logo">
+                <div class="team">Team A</div>
+                <div class="vs">vs</div>
+                <div class="team">Team B</div>
+                <img src="teamB_logo.png" alt="Team B Logo" class="team-logo">
+            </div>
+            <div class="match-time">Sept 15, 2024 - 19:30</div>
+        </a>
+
+        <a id="2" onclick="match(this)" class="match-card">
+            <div class="match-info">
+                <img src="teamC_logo.png" alt="Team C Logo" class="team-logo">
+                <div class="team">Team C</div>
+                <div class="vs">vs</div>
+                <div class="team">Team D</div>
+                <img src="teamD_logo.png" alt="Team D Logo" class="team-logo">
+            </div>
+            <div class="match-time">Sept 16, 2024 - 21:00</div>
+        </a>
+
+        <a id="3" onclick="match(this)" class="match-card">
+            <div class="match-info">
+                <img src="teamE_logo.png" alt="Team E Logo" class="team-logo">
+                <div class="team">Team E</div>
+                <div class="vs">vs</div>
+                <div class="team">Team F</div>
+                <img src="teamF_logo.png" alt="Team F Logo" class="

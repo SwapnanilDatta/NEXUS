@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Football Prize Pool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .prize-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .prize-table th, .prize-table td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .prize-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .prize-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .prize-table tr:hover {
+            background-color: #ddd;
+        }
+
+        .prize-amount {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .cta-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Fantasy Football Prize Pool</h2>
+
+        <table class="prize-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Prize</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1st Place</td>
+                    <td class="prize-amount">$500</td>
+                </tr>
+                <tr>
+                    <td>2nd Place</td>
+                    <td class="prize-amount">$300</td>
+                </tr>
+                <tr>
+                    <td>3rd Place</td>
+                    <td class="prize-amount">$150</td>
+                </tr>
+                <tr>
+                    <td>4th - 10th Place</td>
+                    <td class="prize-amount">$50 each</td>
+                </tr>
+                <tr>
+                    <td>11th - 50th Place</td>
+                    <td class="prize-amount">$20 each</td>
+                </tr>
+                <tr>
+                    <td>Participation Bonus</td>
+                    <td class="prize-amount">Free Entry to Next Game</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a onclick="predict()" class="cta-button">Join the Contest</a>
+    </div>
+
+</body>
+</html>

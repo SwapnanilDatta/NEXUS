@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Football Prediction Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .question select, .question input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            display: block;
+            margin: 20px auto;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h2>Fantasy Football Prediction Quiz</h2>
+
+        <form id="quiz-form">
+            <!-- Predict Match Outcome -->
+            <div id="1" class="question">
+                <label>Who will win the match?</label>
+                <input type="radio" name="match-winner" value="Team A" required> Team A
+                <input type="radio" name="match-winner" value="Team B"> Team B
+                <input type="radio" name="match-winner" value="Draw"> Draw
+            </div>
+            <div id="2" class="question">
+                <label>Predict the exact scoreline (Team A vs Team B):</label>
+                <input type="number" name="teamA-score" min="0" placeholder="Team A score" required> -
+                <input type="number" name="teamB-score" min="0" placeholder="Team B score" required>
+            </div>
+            
+
+            <!-- Predict Top Scorer -->
+            <div id="3" class="question">
+                <label>Who will be the top scorer?</label>
+                <select name="top-scorer" required>
+                    <option value="">Select a player</option>
+                    <option value="Player A">Player A</option>
+                    <option value="Player B">Player B</option>
+                    <option value="Player C">Player C</option>
+                </select>
+            </div>
+            <div id="4" class="question">
+                <label>Who will be the man of the match?</label>
+                <select name="man-of-match" required>
+                    <option value="">Select a player</option>
+                    <option value="Player A">Player A</option>
+                    <option value="Player B">Player B</option>
+                    <option value="Player C">Player C</option>
+                    <option value="Player D">Player D</option>
+                </select>
+            </div>
+            
+
+            <!-- Predict Total Goals -->
+            <div id="5" class="question">
+                <label>How many total goals will be scored?</label>
+                <input type="number" name="total-goals" min="0" required>
+            </div>
+            <div id="6" class="question">
+                <label>How many yellow cards will be shown in the match?</label>
+                <select name="man-of-match" required>
+                    <option value="">Select</option>
+                    <option value="Less">Less than 5</option>
+                    <option value="Mid">5 to 10</option>
+                    <option value="High">10+</option>
+                </select>
+            </div>
+            
+
+            <button type="submit" class="submit-btn">Submit Predictions</button>
+        </form>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get user predictions
+            const matchWinner = document.querySelector('input[name="match-winner"]:checked').value;
+            const topScorer = document.querySelector('select[name="top-scorer"]').value;
+            const totalGoals = document.querySelector('input[name="total-goals"]').value;
+
+            // Here you can send the predictions to your server or calculate points
+            let resultText = `
+                Match Winner: ${matchWinner} <br>
+                Top Scorer: ${topScorer} <br>
+                Total Goals: ${totalGoals} <br>
+                Your predictions have been submitted!
+            `;
+
+            // Display the result to the user
+            document.getElementById('result').innerHTML = resultText;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>

@@ -6,73 +6,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Schedule</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f8ff; /* Light blue background for a fresh look */
+}
 
-        .schedule-container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+.schedule-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Deeper shadow for a pop effect */
+  display: block;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
 
-        h2 {
-            text-align: center;
-            color: #333;
-        }
+h2 {
+  text-align: center;
+  color: #4A90E2; /* A stronger blue color for headings */
+  font-size: 32px;
+  margin-bottom: 20px;
+}
 
-        .match-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #e3e3e3;
-            margin-bottom: 15px;
-            padding: 20px;
-            border-radius: 10px;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
+.match-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Subtle gradient background */
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Adding a slight transform effect */
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #FFC107;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding subtle shadow for depth */
+}
 
-        .match-card:hover {
-            background-color: #d1d1d1;
-        }
+.match-card:hover {
+  background-color: #eceff1; /* Lighter color on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhanced shadow effect */
+}
 
-        .match-info {
-            display: flex;
-            align-items: center;
-        }
+.match-info {
+  display: flex;
+  align-items: center;
+}
 
-        .team-logo {
-            width: 50px;
-            height: 50px;
-            margin-right: 10px;
-            border-radius: 50%;
-        }
+.team-logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+  border-radius: 50%;
+  border: 2px solid #FFC107; /* A stronger border for the team logo */
+}
 
-        .team {
-            margin: 0 20px;
-            font-size: 22px;
-            font-weight: bold;
-        }
+.team {
+  margin: 0 25px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333; /* Darker color for the team names */
+}
 
-        .vs {
-            font-size: 18px;
-            color: #555;
-            margin: 0 20px;
-        }
+.vs {
+  font-size: 20px;
+  color: #888;
+  margin: 0 25px;
+}
 
-        .match-time {
-            font-size: 18px;
-            color: #555;
-        }
+.match-time {
+  font-size: 20px;
+  color: #555;
+  font-style: italic;
+}
+
+/* Media Queries to Make the Site Responsive */
+@media (max-width: 768px) {
+  .schedule-container {
+    grid-template-columns: 1fr; /* Single column layout on smaller screens */
+  }
+
+  .team {
+    margin: 0 15px;
+  }
+
+  .match-time {
+    font-size: 18px;
+  }
+}
+
     </style>
 </head>
 <body>
@@ -82,11 +110,11 @@
 
         <a id="1" onclick="match(this)" class="match-card">
             <div class="match-info">
-                <img src="teamA_logo.png" alt="Team A Logo" class="team-logo">
+                <img src="Team-A.webp" alt="Team A Logo" class="team-logo">
                 <div class="team">Team A</div>
                 <div class="vs">vs</div>
                 <div class="team">Team B</div>
-                <img src="teamB_logo.png" alt="Team B Logo" class="team-logo">
+                <img src="team-B.png" alt="Team B Logo" class="team-logo">
             </div>
             <div class="match-time">Sept 15, 2024 - 19:30</div>
         </a>

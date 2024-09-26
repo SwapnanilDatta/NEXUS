@@ -11,6 +11,9 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            background: url("https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-56228.jpg?w=1060&t=st=1727374043~exp=1727374643~hmac=57a92df2faf3dd848e332bda15ba205ae65e4813eaecea3e5d807dae0b6a8539");
+            background-size: cover;
+            background-repeat: no-repeat;
         }
 
         .quiz-container {
@@ -19,12 +22,16 @@
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: url("https://img.freepik.com/free-vector/gradient-abstract-football-background_52683-66767.jpg?w=1060&t=st=1727374353~exp=1727374953~hmac=2ab0420cd772d14bef2830abad8f1418c5367c36b861c7e8ff2b9dd8222ec45b");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: right;
         }
 
         h2 {
             text-align: center;
-            color: #333;
+            color: #ffffff;
         }
 
         .question {
@@ -35,6 +42,8 @@
             font-weight: bold;
             margin-bottom: 10px;
             display: block;
+            color: #fff;
+            font-size: 1.3em;
         }
 
         .question select, .question input[type="radio"] {
@@ -42,28 +51,55 @@
         }
 
         .submit-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
+            background-color: #0d69eb;
+            color: rgb(255, 255, 255);
+            padding: 20px 20px;
             text-align: center;
             display: block;
             margin: 20px auto;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.5s ease;
+            font-size: 1.2em;
         }
 
         .submit-btn:hover {
-            background-color: #45a049;
+            background-color: #5c97ff;
+            
         }
+        .question input[type="radio"] {
+            color: #ffffff; /* change the color to a medium gray shade */
+}
 
         .result {
             display: none;
             text-align: center;
             margin-top: 20px;
-            color: #333;
+            color: #ffffff;
         }
+        .question input[type="radio"] {
+            accent-color: #1d79d5; /* change the color of the radio button */
+}
+
+        .question input[type="radio"] + label {
+             color: #ffffff; /* change the color of the radio button label */
+}
+        #teamA,#teamB,#draw{
+            color: white;
+            font-size: 1.2em;
+        }
+        input[type="text"], input[type="number"], select {
+            background-color: #c4dff8; /* Light blue background */
+            color: #000000; /* Dark text color */
+            border: 2px solid #0072ff; /* Blue border */
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%; /* Full width */
+            box-sizing: border-box; /* Padding doesn't affect total width */
+        }
+        
 
     </style>
 </head>
@@ -76,12 +112,13 @@
             <!-- Predict Match Outcome -->
             <div id="1" class="question">
                 <label>Who will win the match?</label>
-                <input type="radio" name="match-winner" value="Team A" required> Team A
-                <input type="radio" name="match-winner" value="Team B"> Team B
-                <input type="radio" name="match-winner" value="Draw"> Draw
+                <!-- <input id="teamA" type="radio" name="match-winner" value="Team A" required> Team A</input> -->
+                <div id="teamA"></div>
+                <div id="teamB"></div>
+                <div id="draw"><input type="radio" name="match-winner" value="Draw"> Draw</div>
             </div>
             <div id="2" class="question">
-                <label>Predict the exact scoreline (Team A vs Team B):</label>
+                <label id="q2">:</label>
                 <input type="number" name="teamA-score" min="0" placeholder="Team A score" required> -
                 <input type="number" name="teamB-score" min="0" placeholder="Team B score" required>
             </div>
@@ -90,21 +127,16 @@
             <!-- Predict Top Scorer -->
             <div id="3" class="question">
                 <label>Who will be the top scorer?</label>
-                <select name="top-scorer" required>
+                <select id="drop1" name="top-scorer" required>
                     <option value="">Select a player</option>
-                    <option value="Player A">Player A</option>
-                    <option value="Player B">Player B</option>
-                    <option value="Player C">Player C</option>
+                    
                 </select>
             </div>
             <div id="4" class="question">
                 <label>Who will be the man of the match?</label>
-                <select name="man-of-match" required>
+                <select id="drop2" name="man-of-match" required>
                     <option value="">Select a player</option>
-                    <option value="Player A">Player A</option>
-                    <option value="Player B">Player B</option>
-                    <option value="Player C">Player C</option>
-                    <option value="Player D">Player D</option>
+                    
                 </select>
             </div>
             
@@ -131,8 +163,325 @@
         <div class="result" id="result"></div>
     </div>
 
+
+    <!-- <script src="script.js"></script> -->
     <script>
-        // Handle form submission
+    
+    // const players=
+//     {
+//     "Celta de Vigo":[
+//       "Iván Villar",
+//       "Hugo Mallo",
+//       "Joseph Aidoo",
+//       "Unai Núñez",
+//       "Javi Galán",
+//       "Fran Beltrán",
+//       "Gabri Veiga",
+//       "Iago Aspas",
+//       "Carles Pérez",
+//       "Jørgen Strand Larsen",
+//       "Luca de la Torre"
+//     ],
+    
+//     "Atletico de Madrid": [
+//       "Jan Oblak",
+//       "José Giménez",
+//       "Stefan Savić",
+//       "Mario Hermoso",
+//       "Nahuel Molina",
+//       "Marcos Llorente",
+//       "Koke",
+//       "Rodrigo de Paul",
+//       "Saúl Ñíguez",
+//       "Antoine Griezmann",
+//       "Álvaro Morata"
+//     ],
+    
+//     "SC East Bengal": [
+//       "Kamaljit Singh",
+//       "Lalchungnunga",
+//       "Jerry Lalrinzuala",
+//       "Sarthak Golui",
+//       "Nandhakumar Sekar",
+//       "Souvik Chakraborty",
+//       "Cleiton Silva",
+//       "Saúl Crespo",
+//       "Borja Herrera",
+//       "Naorem Mahesh Singh",
+//       "Edgar Ampadu"
+//     ],
+    
+//     "Goa": [
+//       "Dheeraj Singh",
+//       "Seriton Fernandes",
+//       "Anwar Ali",
+//       "Saviour Gama",
+//       "Brandon Fernandes",
+//       "Edu Bedia",
+//       "Noah Sadaoui",
+//       "Iker Guarrotxena",
+//       "Rowllin Borges",
+//       "Alberto Noguera",
+//       "Makan Chothe"
+//     ],
+    
+//     "Auxerre": [
+//       "Donovan Léon",
+//       "Jubal",
+//       "Gideon Mensah",
+//       "Julian Jeanvier",
+//       "Paul Joly",
+//       "Hamza Sakhi",
+//       "Birama Touré",
+//       "Gauthier Hein",
+//       "Mathias Autret",
+//       "Nuno Da Costa",
+//       "M'Baye Niang"
+//     ],
+    
+//     "Brest": [
+//       "Marco Bizot",
+//       "Brendan Chardonnet",
+//       "Jean-Kévin Duverne",
+//       "Lilian Brassier",
+//       "Kenny Lala",
+//       "Mahdi Camara",
+//       "Pierre Lees-Melou",
+//       "Hugo Magnetti",
+//       "Romain Del Castillo",
+//       "Jérémy Le Douaron",
+//       "Steve Mounié"
+//     ],
+    
+//         "Borussia Dortmund": [
+//           "Gregor Kobel",
+//           "Mats Hummels",
+//           "Niklas Süle",
+//           "Raphaël Guerreiro",
+//           "Julian Brandt",
+//           "Jude Bellingham",
+//           "Emre Can",
+//           "Giovanni Reyna",
+//           "Donyell Malen",
+//           "Sebastien Haller",
+//           "Karim Adeyemi"
+//         ],
+        
+//         "VfL Bochum": [
+//           "Manuel Riemann",
+//           "Danilo Soares",
+//           "Ivan Ordets",
+//           "Erhan Masovic",
+//           "Christian Gamboa",
+//           "Anthony Losilla",
+//           "Kevin Stöger",
+//           "Takuma Asano",
+//           "Philipp Hofmann",
+//           "Christopher Antwi-Adjei",
+//           "Simon Zoller"
+//         ],
+        
+//         "Milan": [
+//           "Mike Maignan",
+//           "Fikayo Tomori",
+//           "Simon Kjær",
+//           "Theo Hernández",
+//           "Davide Calabria",
+//           "Sandro Tonali",
+//           "Ismaël Bennacer",
+//           "Rafael Leão",
+//           "Olivier Giroud",
+//           "Christian Pulisic",
+//           "Tijjani Reijnders"
+//         ],
+        
+//         "Lecce": [
+//           "Wladimiro Falcone",
+//           "Valentin Gendrey",
+//           "Federico Baschirotto",
+//           "Marin Pongračić",
+//           "Antonino Gallo",
+//           "Joan González",
+//           "Youssef Maleh",
+//           "Assan Ceesay",
+//           "Gabriel Strefezza",
+//           "Lameck Banda",
+//           "Nikola Krstović"
+//         ]
+      
+//   }
+
+  const players =
+{
+    "1":[
+      "Iván Villar",
+      "Hugo Mallo",
+      "Joseph Aidoo",
+      "Unai Núñez",
+      "Javi Galán",
+      "Fran Beltrán",
+      "Gabri Veiga",
+      "Iago Aspas",
+      "Carles Pérez",
+      "Jørgen Strand Larsen",
+      "Luca de la Torre",
+      "Jan Oblak",
+      "José Giménez",
+      "Stefan Savić",
+      "Mario Hermoso",
+      "Nahuel Molina",
+      "Marcos Llorente",
+      "Koke",
+      "Rodrigo de Paul",
+      "Saúl Ñíguez",
+      "Antoine Griezmann",
+      "Álvaro Morata"
+    ],
+     "2":[
+      "Kamaljit Singh",
+      "Lalchungnunga",
+      "Jerry Lalrinzuala",
+      "Sarthak Golui",
+      "Nandhakumar Sekar",
+      "Souvik Chakraborty",
+      "Cleiton Silva",
+      "Saúl Crespo",
+      "Borja Herrera",
+      "Naorem Mahesh Singh",
+      "Edgar Ampadu",
+
+      "Dheeraj Singh",
+      "Seriton Fernandes",
+      "Anwar Ali",
+      "Saviour Gama",
+      "Brandon Fernandes",
+      "Edu Bedia",
+      "Noah Sadaoui",
+      "Iker Guarrotxena",
+      "Rowllin Borges",
+      "Alberto Noguera",
+      "Makan Chothe"
+    ],
+    
+    
+    "3": [
+      "Donovan Léon",
+      "Jubal",
+      "Gideon Mensah",
+      "Julian Jeanvier",
+      "Paul Joly",
+      "Hamza Sakhi",
+      "Birama Touré",
+      "Gauthier Hein",
+      "Mathias Autret",
+      "Nuno Da Costa",
+      "M'Baye Niang",
+
+      "Marco Bizot",
+      "Brendan Chardonnet",
+      "Jean-Kévin Duverne",
+      "Lilian Brassier",
+      "Kenny Lala",
+      "Mahdi Camara",
+      "Pierre Lees-Melou",
+      "Hugo Magnetti",
+      "Romain Del Castillo",
+      "Jérémy Le Douaron",
+      "Steve Mounié"
+    ],
+    
+        "Borussia Dortmund": [
+          "Gregor Kobel",
+          "Mats Hummels",
+          "Niklas Süle",
+          "Raphaël Guerreiro",
+          "Julian Brandt",
+          "Jude Bellingham",
+          "Emre Can",
+          "Giovanni Reyna",
+          "Donyell Malen",
+          "Sebastien Haller",
+          "Karim Adeyemi"
+        ],
+        
+        "VfL Bochum": [
+          "Manuel Riemann",
+          "Danilo Soares",
+          "Ivan Ordets",
+          "Erhan Masovic",
+          "Christian Gamboa",
+          "Anthony Losilla",
+          "Kevin Stöger",
+          "Takuma Asano",
+          "Philipp Hofmann",
+          "Christopher Antwi-Adjei",
+          "Simon Zoller"
+        ],
+        
+        "Milan": [
+          "Mike Maignan",
+          "Fikayo Tomori",
+          "Simon Kjær",
+          "Theo Hernández",
+          "Davide Calabria",
+          "Sandro Tonali",
+          "Ismaël Bennacer",
+          "Rafael Leão",
+          "Olivier Giroud",
+          "Christian Pulisic",
+          "Tijjani Reijnders"
+        ],
+        
+        "Lecce": [
+          "Wladimiro Falcone",
+          "Valentin Gendrey",
+          "Federico Baschirotto",
+          "Marin Pongračić",
+          "Antonino Gallo",
+          "Joan González",
+          "Youssef Maleh",
+          "Assan Ceesay",
+          "Gabriel Strefezza",
+          "Lameck Banda",
+          "Nikola Krstović"
+        ]
+      
+  }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const team1 = urlParams.get('team1');
+        const team2 = urlParams.get('team2');
+        const i =  urlParams.get('i');
+
+        const a = document.getElementById("teamA");
+        const b = document.getElementById("teamB");
+        const q2 = document.getElementById("q2");
+        const drops2 =  document.getElementById("drop2");
+        const drops1 = document.getElementById("drop1");
+
+        if(a && b){
+            a.innerHTML = `<input id="teamA" type="radio" name="match-winner" value="Team A" required> ${team1}`;
+            b.innerHTML = `<input id="teamB" type="radio" name="match-winner" value="Team B" required> ${team2}`;
+            q2.innerHTML = `Predict the exact scoreline (${team1} vs ${team2})`;
+
+            players[i].forEach(player => {
+                const playerElement = document.createElement('option');
+                playerElement.value = player;
+                playerElement.text = player;
+                
+                drops2.appendChild(playerElement);
+            });
+            players[i].forEach(player => {
+                const playerElement = document.createElement('option');
+                playerElement.value = player;
+                playerElement.text = player;
+                
+                drops1.appendChild(playerElement);
+            });
+        }
+
+        
+                // Handle form submission
         document.getElementById('quiz-form').addEventListener('submit', function(event) {
             event.preventDefault();
 

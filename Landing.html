@@ -7,16 +7,13 @@
     <link rel="stylesheet" href="landing-style.css">
 </head>
 <body>
-    <video autoplay muted loop playsinline class="background-video">
-        <source src="red.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <h1 class="hero-title">Kick Off Your Winning Streak!</h1>
             <p class="hero-subtitle">Bet on your favorite teams and watch the action unfold.</p>
-            <a href="match_.html"><button class="cta-button">Get Started</button></a>
+            <a href="index.html"><button class="cta-button">Get Started</button></a>
         </div>
         
     </section>
@@ -51,4 +48,147 @@
 
     <script src="landing-script.js"></script>
 </body>
+<style>
+    body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    overflow-x: hidden;
+}
+
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1430232324554-8f4aebd06683?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
+    background-position: center;
+    transform: translateY(0);
+}
+
+.hero.hero-parallax {
+    transform: translateY(20%) !important; /* Adjust the value to your liking */
+}
+
+
+.hero-content {
+    text-align: center;
+    max-width: 70%;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 3em;
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.cta-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background-color: #ff4500;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: scale(1.1);
+}
+
+.odds {
+    padding: 50px;
+    background-color: #222;
+    text-align: center;
+}
+
+.odds-ticker {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.odds-item {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.testimonials {
+    padding: 50px;
+    text-align: center;
+    background-color: #121212;
+}
+
+footer {
+    padding: 20px;
+    background-color: #222;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #ff4500;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+</style>
+<script>// GSAP Animations
+    gsap.from(".hero-title", { duration: 1.5, x: -100, opacity: 0, ease: "power3.out" });
+    gsap.from(".hero-subtitle", { duration: 1.5, x: -100, opacity: 0, ease: "power3.out", delay: 0.3 });
+    gsap.from(".cta-button", { duration: 1.5, y: 50, opacity: 0, ease: "bounce.out", delay: 0.6 });
+    
+    gsap.from(".odds-item", {
+        scrollTrigger: ".odds-item",
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        stagger: 0.3,
+        ease: "power2.out"
+    });
+    
+    gsap.from(".testimonials p", {
+        scrollTrigger: ".testimonials p",
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        stagger: 0.3,
+        ease: "power2.out"
+    });
+    
+    // Scrolling Animation for Background Video
+    
+    gsap.to(".hero::before", {
+    yPercent: 20, // Adjust the value to your liking
+    ease: "none",
+    scrollTrigger: {
+        trigger: ".hero",
+        start: "top top", // When the top of the hero section reaches the top of the viewport
+        end: "bottom top", // When the bottom of the hero section reaches the top of the viewport
+        scrub: true // Smoothly animates in sync with scrolling
+    }
+});
+    </script>
 </html>

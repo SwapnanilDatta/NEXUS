@@ -3,30 +3,479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football Game Login</title>
-    <link rel="stylesheet" href="style.css">
-    
+    <title>Football Schedule</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
-<body id ="background">
-    <div class="login-container">
-        <div class="login-header">
-            <img src="football-logo.png" alt="Football Logo" class="logo">
-            <h1>Football Game Login</h1>
-        </div>
-        <form class="login-form">
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-            <div class="form-links">
-                <a href="#">Forgot Password?</a>
-                <a href="#">Sign Up</a>
-            </div>
-        </form>
-        <div class="social-login">
-            <p>Or login with:</p>
-            <button class="social-button google">Google</button>
-            <button class="social-button facebook">Facebook</button>
-        </div>
+<body>
+    <h1>Match Schedule</h1>
+
+    <div class="schedule-container" id="schedule-container">
+        <!-- Match boxes will be injected here by JS -->
     </div>
+
+    <script src="script.js"></script>
 </body>
+<script>
+// Sample JSON data (you can also fetch this from an API or a file)
+const matches = [
+   
+    {
+        "Field1": " Sep 27 2024, Fri - 00:30 (IST) , Estadio Abanca-Balaidos, Vigo ",
+        "Field2": "Celta de Vigo   ",
+        "Field3": " Vs ",
+        "Field4": "   Atletico de Madrid",
+        "Field5": " La Liga ",
+        "i":"1"
+    },
+    {
+        "Field1": " Sep 27 2024, Fri - 19:30 (IST) , Vivekananda Yuba Bharati Krirangan Stadium, Kolkata ",
+        "Field2": "SC East Bengal   ",
+        "Field3": " Vs ",
+        "Field4": "   Goa",
+        "Field5": " Indian Super League ",
+        "i":"2"
+    },
+    {
+        "Field1": " Sep 27 2024, Fri - 22:30 (IST) , Stade de l'Abbe-Deschamps, Auxerre ",
+        "Field2": "Auxerre   ",
+        "Field3": " Vs ",
+        "Field4": "   Brest",
+        "Field5": " Ligue 1 ",
+        "i":"3"
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 00:00 (IST) , SIGNAL IDUNA PARK, Dortmund ",
+        "Field2": "Borussia Dortmund   ",
+        "Field3": " Vs ",
+        "Field4": "   VfL Bochum",
+        "Field5": " Bundesliga ",
+        "i":"4"
+
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 00:15 (IST) , Stadio Giuseppe Meazza, Milano ",
+        "Field2": "Milan   ",
+        "Field3": " Vs ",
+        "Field4": "   Lecce",
+        "Field5": " Serie A "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 00:30 (IST) , Parc des Princes, Paris ",
+        "Field2": "Paris Saint-Germain   ",
+        "Field3": " Vs ",
+        "Field4": "   Rennes",
+        "Field5": " Ligue 1 "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 00:30 (IST) , Jose Zorrilla, Valladolid ",
+        "Field2": "Real Valladolid   ",
+        "Field3": " Vs ",
+        "Field4": "   Mallorca",
+        "Field5": " La Liga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 17:00 (IST) , St. James' Park, Newcastle ",
+        "Field2": "Newcastle United   ",
+        "Field3": " Vs ",
+        "Field4": "   Manchester City",
+        "Field5": " Premier League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 17:00 (IST) , Kalinga Stadium, Bhubaneswar ",
+        "Field2": "Odisha   ",
+        "Field3": " Vs ",
+        "Field4": "   Jamshedpur FC",
+        "Field5": " Indian Super League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 17:30 (IST) , Estadio Coliseum, Getafe ",
+        "Field2": "Getafe   ",
+        "Field3": " Vs ",
+        "Field4": "   Alaves",
+        "Field5": " La Liga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 18:30 (IST) , Bluenergy Stadium, Udine ",
+        "Field2": "Udinese   ",
+        "Field3": " Vs ",
+        "Field4": "   Internazionale",
+        "Field5": " Serie A "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:00 (IST) , MEWA ARENA, Mainz ",
+        "Field2": "1. FSV Mainz 05   ",
+        "Field3": " Vs ",
+        "Field4": "   1. FC Heidenheim 1846",
+        "Field5": " Bundesliga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:00 (IST) , BORUSSIA-PARK, Moenchengladbach ",
+        "Field2": "Borussia Moenchengladbach   ",
+        "Field3": " Vs ",
+        "Field4": "   1. FC Union Berlin",
+        "Field5": " Bundesliga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:00 (IST) , Europa-Park Stadion, Freiburg im Breisgau ",
+        "Field2": "Sport-Club Freiburg   ",
+        "Field3": " Vs ",
+        "Field4": "   FC St. Pauli",
+        "Field5": " Bundesliga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:00 (IST) , Red Bull Arena, Leipzig ",
+        "Field2": "RB Leipzig   ",
+        "Field3": " Vs ",
+        "Field4": "   FC Augsburg",
+        "Field5": " Bundesliga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:00 (IST) , Volkswagen Arena, Wolfsburg ",
+        "Field2": "VfL Wolfsburg   ",
+        "Field3": " Vs ",
+        "Field4": "   VfB Stuttgart",
+        "Field5": " Bundesliga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:30 (IST) , Sree Kanteerava Stadium, Bangalore ",
+        "Field2": "Bengaluru   ",
+        "Field3": " Vs ",
+        "Field4": "   ATK Mohun Bagan",
+        "Field5": " Indian Super League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:30 (IST) , Emirates Stadium, London ",
+        "Field2": "Arsenal   ",
+        "Field3": " Vs ",
+        "Field4": "   Leicester City",
+        "Field5": " Premier League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:30 (IST) , Gtech Community Stadium, Brentford ",
+        "Field2": "Brentford   ",
+        "Field3": " Vs ",
+        "Field4": "   West Ham United",
+        "Field5": " Premier League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:30 (IST) , Stamford Bridge, London ",
+        "Field2": "Chelsea   ",
+        "Field3": " Vs ",
+        "Field4": "   Brighton and Hove Albion",
+        "Field5": " Premier League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:30 (IST) , Goodison Park, Liverpool ",
+        "Field2": "Everton   ",
+        "Field3": " Vs ",
+        "Field4": "   Crystal Palace",
+        "Field5": " Premier League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:30 (IST) , The City Ground, Nottingham ",
+        "Field2": "Nottingham Forest   ",
+        "Field3": " Vs ",
+        "Field4": "   Fulham",
+        "Field5": " Premier League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 19:45 (IST) , Estadio de Vallecas, Madrid ",
+        "Field2": "Rayo Vallecano   ",
+        "Field3": " Vs ",
+        "Field4": "   Leganes",
+        "Field5": " La Liga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 20:30 (IST) , Stade Felix Bollaert-Delelis, Lens ",
+        "Field2": "Lens   ",
+        "Field3": " Vs ",
+        "Field4": "   Nice",
+        "Field5": " Ligue 1 "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 21:30 (IST) , Luigi Ferraris, Genova ",
+        "Field2": "Genoa   ",
+        "Field3": " Vs ",
+        "Field4": "   Juventus",
+        "Field5": " Serie A "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 22:00 (IST) , Allianz Arena, Muenchen ",
+        "Field2": "FC Bayern Muenchen   ",
+        "Field3": " Vs ",
+        "Field4": "   Bayer 04 Leverkusen",
+        "Field5": " Bundesliga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 22:00 (IST) , Reale Arena, San Sebastian ",
+        "Field2": "Real Sociedad   ",
+        "Field3": " Vs ",
+        "Field4": "   Valencia CF",
+        "Field5": " La Liga "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 22:00 (IST) , Molineux Stadium, Wolverhampton ",
+        "Field2": "Wolverhampton Wanderers   ",
+        "Field3": " Vs ",
+        "Field4": "   Liverpool",
+        "Field5": " Premier League "
+    },
+    {
+        "Field1": " Sep 28 2024, Sat - 22:30 (IST) , Stade Oceane, Le Havre ",
+        "Field2": "Le Havre   ",
+        "Field3": " Vs ",
+        "Field4": "   Lille",
+        "Field5": " Ligue 1 "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 00:15 (IST) , Renato Dall'Ara, Bologna ",
+        "Field2": "Bologna   ",
+        "Field3": " Vs ",
+        "Field4": "   Atalanta",
+        "Field5": " Serie A "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 00:30 (IST) , Stade Louis-II, Monaco ",
+        "Field2": "Monaco   ",
+        "Field3": " Vs ",
+        "Field4": "   Montpellier",
+        "Field5": " Ligue 1 "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 00:30 (IST) , El Sadar, Pamplona ",
+        "Field2": "Osasuna   ",
+        "Field3": " Vs ",
+        "Field4": "   Barcelona",
+        "Field5": " La Liga "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 16:00 (IST) , Olimpico Grande Torino, Torino ",
+        "Field2": "Torino   ",
+        "Field3": " Vs ",
+        "Field4": "   Lazio",
+        "Field5": " Serie A "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 17:30 (IST) , Estadio Abanca-Balaidos, Vigo ",
+        "Field2": "Celta de Vigo   ",
+        "Field3": " Vs ",
+        "Field4": "   Girona",
+        "Field5": " La Liga "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 18:30 (IST) , Giuseppe Sinigaglia, Como ",
+        "Field2": "Como   ",
+        "Field3": " Vs ",
+        "Field4": "   Verona",
+        "Field5": " Serie A "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 18:30 (IST) , Stadio Olimpico, Roma ",
+        "Field2": "Roma   ",
+        "Field3": " Vs ",
+        "Field4": "   Venezia",
+        "Field5": " Serie A "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 18:30 (IST) , Stadium de Toulouse, Toulouse ",
+        "Field2": "Toulouse   ",
+        "Field3": " Vs ",
+        "Field4": "   Lyon",
+        "Field5": " Ligue 1 "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 18:30 (IST) , Portman Road, Ipswich ",
+        "Field2": "Ipswich Town   ",
+        "Field3": " Vs ",
+        "Field4": "   Aston Villa",
+        "Field5": " Premier League "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 19:00 (IST) , Holstein-Stadion, Kiel ",
+        "Field2": "Holstein Kiel   ",
+        "Field3": " Vs ",
+        "Field4": "   Eintracht Frankfurt",
+        "Field5": " Bundesliga "
+    },
+    {
+        "Field1": " Sep 29 2024, Sun - 19:30 (IST) , Indira Gandhi Stadium, Guwahati ",
+        "Field2": "NorthEast United   ",
+        "Field3": " Vs ",
+        "Field4": "   Kerala Blasters",
+        "Field5": " Indian Super League "
+    }
+    // Add more matches here from the JSON data
+];
+
+// Function to create schedule dynamically
+function createSchedule(matches) {
+    const container = document.getElementById('schedule-container');
+    
+    matches.forEach(match => {
+        // Create match box
+        const matchBox = document.createElement('div');
+        matchBox.classList.add('match-box');
+        
+        // Inject match details
+        matchBox.innerHTML = `
+            <div class="match-info">${match.Field1}</div>
+            <div class="match-teams">${match.Field2} ${match.Field3} ${match.Field4}</div>
+            <div class="match-league">${match.Field5}</div>
+        `;
+        
+        // Add click event to pass team names
+        matchBox.addEventListener('click', () => {
+            passTeams(match.Field2, match.Field4,match.i);
+        });
+        
+        // Append match box to container
+        container.appendChild(matchBox);
+    });
+}
+
+// Function to handle team names on click
+function passTeams(team1, team2,i) {
+    console.log(`Selected Match: ${team1} vs ${team2}`);
+    window.location.href = `predict.html?team1=${team1}&team2=${team2}&i=${i}`;
+}
+
+// Call the function to generate the schedule
+createSchedule(matches);
+
+
+
+// script.js
+
+// Get the team elements and the join button
+const teamA = `${match.Field2}`
+const teamB = `${match.Field4}`
+
+
+// Add event listeners to the teams
+teamA.addEventListener('click', () => {
+  // Show the players list for Team A
+  showPlayersList('teamA');
+});
+
+teamB.addEventListener('click', () => {
+  // Show the players list for Team B
+  showPlayersList('teamB');
+});
+
+// Function to show the players list for a given team
+function showPlayersList(teamId) {
+  const teamList = document.getElementById(`${teamId}-list`);
+  // Assuming you have an array of players for each team
+  const players = teamId === 'teamA' ? teamAPlayers : teamBPlayers;
+  
+  // Clear the list
+  teamList.innerHTML = '';
+  
+  // Add the players to the list
+  players.forEach((player) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = player.name;
+    teamList.appendChild(listItem);
+  });
+}
+
+// Example players data (replace with your actual data)
+const teamAPlayers = [
+  { name: 'Player 1' },
+  { name: 'Player 2' },
+  { name: 'Player 3' },
+];
+
+const teamBPlayers = [
+  { name: 'Player 4' },
+  { name: 'Player 5' },
+  { name: 'Player 6' },
+];
+</script>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #0A1128;
+        color: #ffffff;
+        margin: 0;
+        padding: 20px;
+        text-align: center; /* Center all content */
+        background-image: url('https://img.freepik.com/free-vector/blue-copy-space-digital-background_23-2148821698.jpg?w=1060&t=st=1727365480~exp=1727366080~hmac=c473c78418f23edaed60719ac8ece1acbdc4392c2bffcd1e523114373362394f');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    h1 {
+        font-size: 3em;
+        color: #0077b6; /* Main blue shade */
+        margin-bottom: 30px;
+    }
+
+    .schedule-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .match-box {
+        background-color: #023e8a; /* Darker blue */
+        border: 1px solid #0077b6;
+        border-radius: 12px;
+        padding: 20px;
+        width: 100%;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .match-box:hover {
+        transform: scale(1.05);
+        background-color: #0077b6;
+    }
+
+    .match-info, .match-teams, .match-league {
+        display: flex;
+        justify-content: center; /* Center match details */
+    }
+
+    .match-info {
+        font-size: 16px;
+        color: #caf0f8; /* Light blue */
+        margin-bottom: 10px;
+    }
+
+    .match-teams {
+        font-size: 20px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    .match-league {
+        font-size: 18px;
+        color: #90e0ef;
+        margin-top: 5px;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 768px) {
+        .match-box {
+            padding: 15px;
+        }
+
+        .match-teams {
+            font-size: 16px;
+        }
+
+        .match-info {
+            font-size: 12px;
+        }
+
+        .match-league {
+            font-size: 14px;
+        }
+    }
+</style>
 </html>

@@ -1,40 +1,62 @@
-let id, x, y;
 
-function match(element) {
-    id = element; // Capture the match element clicked
-    window.location.href = 'pool.html'; // Redirect to pool.html
-}
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = 'your_username'; // Replace with your actual username
+        const token = 'your_actual_api_key'; // Replace with your actual API key
+        const apiUrl = `https://api.soccersapi.com/v2.2/search/?user=${username}&token=${token}&t=all&q=dazn`;
 
-function predict() {
-    // Declare x and y outside the if-else block
-    if (id === "1") {
-        x = "A";
-        y = "B";
-    } else if (id === "2") {
-        x = "C";
-        y = "D";
-    } else {
-        x = "E";
-        y = "F";
-    }
+        // Function to fetch and display data
+        function fetchData() {
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    displayMatches(data);
+                    displayPlayers(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
 
-    // You cannot manipulate the DOM and redirect simultaneously.
-    // Move the navigation after DOM manipulation or use localStorage.
-    window.location.href = 'predict.html'; // Redirects to predict.html
+        // Function to display matches
+        function displayMatches(data) {
+            const matchesContainer = document.getElementById('matches');
+            if (data.matches && data.matches.length > 0) {
+                data.matches.forEach(match => {
+                    const matchElement = document.createElement('div');
+                    matchElement.className = 'match';
+                    matchElement.innerHTML = `
+                        <h3>${match.homeTeam} vs ${match.awayTeam}</h3>
+                        <p>Date: ${match.date}</p>
+                        <p>Time: ${match.time}</p>
+                    `;
+                    matchesContainer.appendChild(matchElement);
+                });
+            } else {
+                matchesContainer.innerHTML += '<p>No matches found.</p>';
+            }
+        }
 
-    // The DOM manipulation should be on the predict.html page, 
-    // after the redirection
-}
+        // Function to display player stats
+        function displayPlayers(data) {
+            const playersContainer = document.getElementById('players');
+            if (data.players && data.players.length > 0) {
+                data.players.forEach(player => {
+                    const playerElement = document.createElement('div');
+                    playerElement.className = 'player';
+                    playerElement.innerHTML = `
+                        <h3>${player.name}</h3>
+                        <p>Team: ${player.team}</p>
+                        <p>Position: ${player.position}</p>
+                        <p>Goals: ${player.goals}</p>
+                    `;
+                    playersContainer.appendChild(playerElement);
+                });
+            } else {
+                playersContainer.innerHTML += '<p>No players found.</p>';
+            }
+        }
 
-// On predict.html, after loading the page
-window.onload = function() {
-    // Check if id, x, and y values are passed from previous page
-    let parent = document.getElementById("1");
-    if (parent && x && y) {
-        let info1 = `<label>Who will win the match?</label>
-                     <input type="radio" name="match-winner" value="Team ${x}" required> Team ${x}
-                     <input type="radio" name="match-winner" value="Team ${y}"> Team ${y}
-                     <input type="radio" name="match-winner" value="Draw"> Draw!!!!!!!!!!`;
-        parent.innerHTML = info1;
-    }
-};
+        // Fetch data when the page loads
+        fetchData();
+    });
+

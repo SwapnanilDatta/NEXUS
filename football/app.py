@@ -339,7 +339,7 @@ def index():
 
     html_content += '''
         </ul>
-        <h1>Bottom 6 Football Players</h1>
+        <h1>Top 6 Football Club</h1>
         <table>
             <tr>
                 <th>Team Name</th>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Profile Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #acb1ad;
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .profile-page {
+            max-width: 600px;
+            width: 100%;
+            background: #fff;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+            text-align: center;
+            position: relative;
+        }
+
+        .content__cover {
+            background: linear-gradient(150deg, #1d8cf8 20%, #3358f4 100%);
+            border-radius: 2rem 2rem 0 0;
+            padding: 2rem;
+        }
+
+        .content__avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: url("https://i.ibb.co/w60wnyd/profile.jpg") center center no-repeat;
+            background-size: cover;
+            margin: 0 auto;
+        }
+
+        .content__title h1 {
+            margin-top: 1rem;
+            font-size: 2rem;
+        }
+
+        .content__title span {
+            display: block;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .content__list {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+            list-style: none;
+        }
+
+        .content__list li {
+            font-size: 1rem;
+        }
+
+        .content__list li span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .content__button {
+            margin-top: 2rem;
+        }
+
+        .button,
+        .logout-button {
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .button {
+            background: linear-gradient(100deg, #1d8cf8 30%, #3358f4 100%);
+        }
+
+        .logout-button {
+            background: #ff0000;
+            margin-left: 1rem;
+        }
+
+        .button:hover,
+        .logout-button:hover {
+            opacity: 0.9;
+        }
+
+        .flash-message {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem;
+            border-radius: 1rem;
+            background: rgba(0, 255, 0, 0.1);
+            color: green;
+            font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .flash-message.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-page">
+        <div class="content__cover">
+            <div class="content__avatar"></div>
+        </div>
+        <div class="content__title">
+            <h1>{{user}}</h1>
+            <span>Kolkata, India</span>
+        </div>
+        <ul class="content__list">
+            <li><span>{{coins}}</span> Coins</li>
+            <li><span>0</span> Participation</li>
+            <li><span>#</span> Rank</li>
+        </ul>
+        <div class="content__button">
+            <a class="button" href="{{ url_for('match_page') }}">Continue</a>
+            <a class="logout-button" href="/logout">Logout</a>
+        </div>
+        
+        <!-- Flash message display area -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flashes">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+    </div>
+</body>
+</html>

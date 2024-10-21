@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Schedule</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="myheader">
+        <div class="header-left">
+            <button class="nvb"><a class="button" href="{{ url_for('welcome') }}">Profile</a></button>
+            <button class="nvb" onclick="window.location.href='https://www.whoscored.com/Statistics'">
+                <div class="text">Player Stats</div>
+            </button>
+            <button class="nvb"><a class="button" href="{{ url_for('widget') }}">Live Matches and Scores</a></button>
+            <button class="nvb"><div class="text">About</div></button>
+        </div>
+        <div class="header-right">
+            <div class="coins-box">
+                <span>Coins: {{ coins }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <h1>Match Schedule</h1>
+
+        <div class="schedule-container" id="schedule-container">
+            {% for match in matches %}
+            <div class="match-box">
+                <div class="match-info">{{ match.Field1 }}</div>
+                <div class="match-teams">{{ match.Field2 }} {{ match.Field3 }} {{ match.Field4 }}</div>
+                <div class="match-league">{{ match.Field5 }}</div>
+                <a href="{{ url_for('predict', team1=match['Field2'], team2=match['Field4'], i=loop.index) }}">Predict Match</a>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

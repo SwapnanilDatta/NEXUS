@@ -148,9 +148,22 @@ def login():
 @app.route('/welcome')
 def welcome():
     if 'username' in session:
-        return render_template('welcome.html', user=session['username'], coins=session['coins'])
-    return redirect(url_for('login'))
+        conn = connect_db()
+        cursor = conn.cursor()
+        try:
+            # Query to count the number of users
+            cursor.execute("SELECT COUNT(*) FROM users")
+            user_count = cursor.fetchone()[0]  # Fetch the count
 
+            return render_template('welcome.html', user=session['username'], coins=session['coins'], user_count=user_count)
+        except mysql.connector.Error as err:
+            flash(f'Error: {err}', 'danger')
+            return redirect(url_for('login'))
+        finally:
+            cursor.close()
+            conn.close()
+    return redirect(url_for('login'))
+    
 @app.route('/match')
 def match_page():
     if 'username' in session:

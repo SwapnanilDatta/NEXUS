@@ -45,6 +45,9 @@ matches = [
         "Field5": "Premier League"
     }
 ]
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/add_coins/<int:amount>', methods=['POST'])
 def add_coins(amount):

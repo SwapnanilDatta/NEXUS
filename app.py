@@ -185,7 +185,7 @@ def predict():
 @app.route('/widget')
 def widget():
     if 'username' in session:
-        return render_template('widget.html', matches=matches, coins=session['coins'])
+        return render_template('Widget.html', matches=matches, coins=session['coins'])
     return redirect(url_for('login'))
 
 

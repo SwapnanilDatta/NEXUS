@@ -1,7 +1,23 @@
 from flask import Flask, request, redirect, url_for, session, flash, render_template
+from pymongo import MongoClient
+from pymongo.errors import ServerSelectionTimeoutError
+import re
 import mysql.connector
 
 app = Flask(__name__)
+connection_string = "mongodb+srv://anwayeedas05:KqvTHDQoDhyx8rZt@cluster0.hj2id.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&tls=true"
+
+# Connect to the MongoDB client
+client = MongoClient(connection_string)
+db = client['desthink']  # Database name
+collection = db['usbhaius']  # Collection name
+def find_player_by_name(player_name):
+    name_parts = player_name.split()
+    regex_pattern = '.' + '.'.join(name_parts) + '.*'
+    pattern = re.compile(regex_pattern, re.IGNORECASE)
+    players = list(collection.find({"Name": pattern}))
+    return players
+
 app.secret_key = 'your_secret_key'  
 
 def connect_db():
@@ -211,6 +227,22 @@ def logout():
     session.pop('coins', None)
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
+
+@app.route('/info', methods=['GET', 'POST'])
+def index():
+    players = []
+    no_result = False
+    top_5_players = get_top_5_players()  # Flag to indicate if no players were found
+    if request.method == 'POST':
+        player_name = request.form['player_name']
+        players = find_player_by_name(player_name)
+        if not players:
+            no_result = True  
+
+    return render_template("info.html", players=players, no_result=no_result, top_5_players=top_5_players)
+def get_top_5_players():
+    top_players = collection.find().sort("Score", -1).limit(5)
+    return top_players
 
 import random
 

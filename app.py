@@ -24,43 +24,13 @@ def connect_db():
     return mysql.connector.connect(
         host='sql12.freemysqlhosting.net',
         port=3306,
-        user='sql12739182',
-        password='UVYGwb3aGU',
-        database='sql12739182',
+        user='sql12744082',
+        password='8klPmHKVJq',
+        database='sql12744082',
         ssl_disabled=True
     )
 
 
-matches = [
-    {
-        "Field1": "Oct 27 2024, Tue - 21:00 (IST), Wanda Metropolitano, Madrid",
-        "Field2": "Atletico Madrid",
-        "Field3": "Vs",
-        "Field4": "Real Sociedad",
-        "Field5": "La Liga"
-    },
-    {
-        "Field1": "Oct 27 2024, Wed - 21:00 (IST), Stadio Diego Armando Maradona, Naples",
-        "Field2": "Napoli",
-        "Field3": "Vs",
-        "Field4": "AC Milan",
-        "Field5": "Serie A"
-    },
-    {
-        "Field1": "Oct 28 2024, Thu - 21:00 (IST), Parc des Princes, Paris",
-        "Field2": "Paris Saint-Germain",
-        "Field3": "Vs",
-        "Field4": "Olympique Lyonnais",
-        "Field5": "Ligue 1"
-    },
-    {
-        "Field1": "Oct 28 2024, Fri - 21:00 (IST), Anfield, Liverpool",
-        "Field2": "Liverpool",
-        "Field3": "Vs",
-        "Field4": "Manchester United",
-        "Field5": "Premier League"
-    }
-]
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -180,44 +150,77 @@ def welcome():
             conn.close()
     return redirect(url_for('login'))
     
+
 @app.route('/match')
 def match_page():
     if 'username' in session:
-        return render_template('match.html', matches=matches, coins=session['coins'])
+        conn = connect_db()
+        cursor = conn.cursor(dictionary=True)
+        try:
+            # Fetch all upcoming matches with team names
+            cursor.execute("""
+                SELECT m.match_id, m.team1_id, m.team2_id, m.match_date, 
+                       t1.team_name AS team1_name, t2.team_name AS team2_name
+                FROM matches m
+                JOIN teams t1 ON m.team1_id = t1.team_id
+                JOIN teams t2 ON m.team2_id = t2.team_id
+            """)
+            matches = cursor.fetchall()
+
+            # Return the matches with team names
+            return render_template('match.html', matches=matches, coins=session['coins'])
+        except mysql.connector.Error as err:
+            flash(f'Error: {err}', 'danger')
+            return redirect(url_for('login'))
+        finally:
+            cursor.close()
+            conn.close()
+
     return redirect(url_for('login'))
+
+
 
 @app.route('/predict')
 def predict():
-    team1 = request.args.get('team1')
-    team2 = request.args.get('team2')
-    match_index = request.args.get('i')
+    team1_id = request.args.get('team1')  # Get team1's ID from the URL
+    team2_id = request.args.get('team2')  # Get team2's ID from the URL
+    match_index = request.args.get('i')  # Get match index, for reference if needed
 
-    if not team1 or not team2:
+    if not team1_id or not team2_id:
         flash('Invalid teams selected', 'danger')
         return redirect(url_for('match_page'))
 
-    # Fetch players for both teams from the JSON structure
-    teams_data = {
-        "Atletico Madrid": ["Antoine Griezmann", "Jan Oblak", "Rodrigo De Paul", "Thomas Lemar", "Marcos Llorente"],
-        "Real Sociedad": ["Mikel Oyarzabal", "Takefusa Kubo", "Martin Zubimendi", "David Silva", "Robin Le Normand"],
-        "Napoli": ["Victor Osimhen", "Khvicha Kvaratskhelia", "Giovanni Di Lorenzo", "Piotr Zieliński", "André-Frank Zambo Anguissa"],
-        "AC Milan": ["Rafael Leão", "Theo Hernández", "Christian Pulisic", "Mike Maignan", "Fikayo Tomori"],
-        "Paris Saint-Germain": ["Kylian Mbappé", "Achraf Hakimi", "Marquinhos", "Marco Verratti", "Ousmane Dembélé"],
-        "Olympique Lyonnais": ["Alexandre Lacazette", "Rayan Cherki", "Maxence Caqueret", "Nicolás Tagliafico", "Anthony Lopes"],
-        "Liverpool": ["Mohamed Salah", "Virgil van Dijk", "Alisson Becker", "Trent Alexander-Arnold", "Dominik Szoboszlai"],
-        "Manchester United": ["Bruno Fernandes", "Marcus Rashford", "Casemiro", "André Onana", "Lisandro Martínez"]
-    }
+    conn = connect_db()
+    cursor = conn.cursor(dictionary=True)
 
-    teamAPlayers = teams_data.get(team1, [])
-    teamBPlayers = teams_data.get(team2, [])
+    try:
+        # Fetch players for team1
+        cursor.execute("SELECT player_name FROM players WHERE team_id = %s", (team1_id,))
+        teamAPlayers = cursor.fetchall()
 
-    return render_template('predict.html', team1=team1, team2=team2, match_index=match_index, 
-                           teamAPlayers=teamAPlayers, teamBPlayers=teamBPlayers)
+        # Fetch players for team2
+        cursor.execute("SELECT player_name FROM players WHERE team_id = %s", (team2_id,))
+        teamBPlayers = cursor.fetchall()
+
+        # Check if players are found for both teams
+        if not teamAPlayers or not teamBPlayers:
+            flash('No players found for one or both teams', 'danger')
+            return redirect(url_for('match_page'))
+
+        return render_template('predict.html', team1=team1_id, team2=team2_id, match_index=match_index, 
+                               teamAPlayers=[player['player_name'] for player in teamAPlayers], 
+                               teamBPlayers=[player['player_name'] for player in teamBPlayers])
+    except mysql.connector.Error as err:
+        flash(f'Error: {err}', 'danger')
+        return redirect(url_for('match_page'))
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/widget')
 def widget():
     if 'username' in session:
-        return render_template('Widget.html', matches=matches, coins=session['coins'])
+        return render_template('Widget.html')
     return redirect(url_for('login'))
 
 
@@ -246,11 +249,11 @@ def get_top_5_players():
 
 import random
 
-import random
 
 @app.route('/check_prediction', methods=['POST'])
 def check_prediction():
     if 'username' in session:
+        # Get form data with default value to avoid 'None' errors
         team1 = request.form.get('team1')
         team2 = request.form.get('team2')
         mvp_team1 = request.form.get('mvp_team1')
@@ -258,15 +261,52 @@ def check_prediction():
         red_cards_prediction = request.form.get('red_cards')
         total_goals_prediction = request.form.get('total_goals')
 
+        # Debugging: Print the received team1 and team2 values
+        print(f"Received team1: {team1}, team2: {team2}")
+
+        # Check if any of the required fields are missing
+        if not team1 or not team2 or not mvp_team1 or not mvp_team2 or not red_cards_prediction or not total_goals_prediction:
+            flash('All fields are required!', 'danger')
+            return redirect(url_for('predict'))
+
+        team1 = team1.strip() if team1 else None
+        team2 = team2.strip() if team2 else None
+
         if not team1 or not team2:
-            flash('Team selection is missing!', 'danger')
+            flash('Invalid team names!', 'danger')
             return redirect(url_for('predict'))
 
         conn = connect_db()
         cursor = conn.cursor()
 
         try:
-            # Deduct 20 coins from the user for submitting the prediction
+            # Fetch team IDs based on team names
+            cursor.execute("SELECT player_name FROM players WHERE team_id = %s", (team1,))
+            team1_data = cursor.fetchall()
+            cursor.execute("SELECT player_name FROM players WHERE team_id = %s", (team2,))
+            team2_data = cursor.fetchall()
+
+            # Debugging: Print the team data fetched from the database
+            print(f"Fetched team1 data: {team1_data}, team2 data: {team2_data}")
+
+            if not team1_data or not team2_data:
+                flash('Invalid teams selected', 'danger')
+                return redirect(url_for('predict'))
+
+            # team1_id = team1_data[0]
+            # team2_id = team2_data[0]
+
+            # Fetch players for both teams
+            # cursor.execute("SELECT player_name FROM players WHERE team_id = %s", (team1_id,))
+            # team1_players = cursor.fetchall()
+
+            # cursor.execute("SELECT player_name FROM players WHERE team_id = %s", (team2_id,))
+            # team2_players = cursor.fetchall()
+
+            if not team1_data or not team2_data:
+                flash('No players found for one or both teams', 'danger')
+                return redirect(url_for('predict'))
+            
             current_coins = session['coins']
             if current_coins >= 20:
                 new_coins = current_coins - 20
@@ -278,16 +318,13 @@ def check_prediction():
                 flash('Insufficient coins to submit prediction!', 'danger')
                 return redirect(url_for('predict'))
 
-            # Simulate actual outcomes
-            actual_red_cards = random.choices([0, 1, 2, 3], weights=[0.5, 0.3, 0.15, 0.05])[0]
-            actual_total_goals = random.choices([0, 1, 2, 3, 4, 5, 6], weights=[0.1, 0.3, 0.4, 0.15, 0.04, 0.01, 0.005])[0]
-
-            # Simulate actual MVPs by randomly choosing players from the database
-            cursor.execute("SELECT player_name FROM players WHERE team_id = (SELECT team_id FROM teams WHERE team_name = %s) ORDER BY RAND() LIMIT 1", (team1,))
-            actual_mvp_team1 = cursor.fetchone()[0]
-
-            cursor.execute("SELECT player_name FROM players WHERE team_id = (SELECT team_id FROM teams WHERE team_name = %s) ORDER BY RAND() LIMIT 1", (team2,))
-            actual_mvp_team2 = cursor.fetchone()[0]
+            # Generate random red cards and total goals
+            actual_red_cards = random.choice([0, 1, 2, ">2"])  # Randomly choose between 0, 1-2, or >2
+            actual_total_goals = random.choice([0, 1, 2, 3, 4, 5, ">5"])  # Random goals choice
+            
+            # Randomly select an MVP from the available players for each team
+            actual_mvp_team1 = random.choice([player[0] for player in team1_data])
+            actual_mvp_team2 = random.choice([player[0] for player in team2_data])
 
             # Debugging MVP logic
             print(f"Actual MVPs: {actual_mvp_team1} for {team1}, {actual_mvp_team2} for {team2}")
@@ -298,18 +335,18 @@ def check_prediction():
                 red_cards_awarded += 10
             elif red_cards_prediction == "1-2" and actual_red_cards in [1, 2]:
                 red_cards_awarded += 10
-            elif red_cards_prediction == ">2" and actual_red_cards > 2:
+            elif red_cards_prediction == ">2" and actual_red_cards == ">2":
                 red_cards_awarded += 10
 
             # Check total goals prediction
             goals_awarded = 0
-            if total_goals_prediction == "0-1" and actual_total_goals <= 1:
+            if total_goals_prediction == "0-1" and actual_total_goals in [0, 1]:
                 goals_awarded += 10
             elif total_goals_prediction == "1-3" and actual_total_goals in [1, 2, 3]:
                 goals_awarded += 10
             elif total_goals_prediction == "3-5" and actual_total_goals in [3, 4, 5]:
                 goals_awarded += 10
-            elif total_goals_prediction == ">5" and actual_total_goals > 5:
+            elif total_goals_prediction == ">5" and actual_total_goals == ">5":
                 goals_awarded += 10
 
             # Check MVP predictions
@@ -344,6 +381,7 @@ def check_prediction():
     else:
         flash('You need to log in to perform this action', 'danger')
         return redirect(url_for('login'))
+
 
 
 if __name__ == '__main__':

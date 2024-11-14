@@ -6,74 +6,113 @@
     <title>Register</title>
     <style>
         body {
-            background-color: black;
-            color: yellow;
-            font-family: Arial, sans-serif;
+            background-color: #121212; /* Dark background for a sleek look */
+            color: #f1c40f; /* Yellow color for text */
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden; /* Prevent scrolling */
         }
-
+        
         h1 {
             margin-bottom: 20px;
+            font-size: 2.5rem; /* Larger title for emphasis */
+            text-align: center;
+            color: #f39c12; /* A warm yellow shade */
         }
-
+        
         form {
             background-color: rgba(255, 255, 255, 0.1);
             padding: 40px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px); /* Subtle blur effect for the background */
+            width: 100%;
+            max-width: 400px; /* Limit form width */
+            text-align: center; /* Center align form elements */
         }
+        
         label {
             display: block;
             margin: 10px 0 5px;
+            font-size: 1.1rem; /* Slightly larger labels */
         }
-
+        
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid yellow;
-            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #f39c12;
+            border-radius: 6px;
             background-color: rgba(255, 255, 255, 0.2);
-            color: yellow;
+            color: #f1c40f;
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out; /* Smooth transition for interaction */
         }
-
+        
         input[type="text"]:focus,
         input[type="password"]:focus {
             outline: none;
-            border-color: white;
+            border-color: #e67e22; /* Orange border when focused */
+            background-color: rgba(255, 255, 255, 0.3); /* Light background color on focus */
         }
-
-
+        
         button {
-            background-color: yellow;
-            color: black;
-            padding: 10px;
+            background-color: #f39c12;
+            color: #121212;
+            padding: 12px 25px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover transition */
         }
-
+        
         button:hover {
-            background-color: orange;
+            background-color: #e67e22; /* Change to a brighter orange */
+            transform: scale(1.05); /* Slightly enlarge button on hover */
         }
-
-        a {
-            color: yellow;
-            text-decoration: none;
-            display: block;
-            margin-top: 10px;
+        
+        p {
+            color: red;
+            font-size: 1rem;
+            font-weight: bold;
             text-align: center;
+            margin-top: 10px;
+            animation: shake 0.5s ease-in-out; /* Add shake effect for error message */
         }
-
-        a:hover {
-            text-decoration: underline;
+        
+        /* Shake effect for flash messages */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
         }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem; /* Smaller title on mobile devices */
+            }
+        
+            form {
+                padding: 30px; /* Adjust form padding for small screens */
+            }
+        
+            input[type="text"],
+            input[type="password"],
+            button {
+                font-size: 1rem; /* Slightly smaller font size for inputs and button */
+            }
+        }
+        
     </style>
 </head>
 <body>

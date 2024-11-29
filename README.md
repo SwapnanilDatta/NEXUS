@@ -44,7 +44,7 @@ This **Football Fantasy Web App** is a Flask-based platform designed for footbal
 ### Prerequisites
 - Python 3.9+
 - Flask and required libraries (see `requirements.txt`)
-- MySQL or SQLite database setup
+- MySQL and Mongodb database setup
 
 ### Steps
 1. Clone the repository:

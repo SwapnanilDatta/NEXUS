@@ -49,8 +49,8 @@ This **Football Fantasy Web App** is a Flask-based platform designed for footbal
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/football-fantasy-app.git
-   cd football-fantasy-app
+   git clone https://github.com/SwapnanilDatta/NEXUS.git
+   cd NEXUS
    ```
 2. Install dependencies:
    ```bash
